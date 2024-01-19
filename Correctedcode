@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+
+using namespace std;
+
+vector<int> two_sum(vector<int>& nums, int target) {
+  // Create a hash table to store the elements of the array and their indices.
+  unordered_map<int, int> seen;
+
+  for (int i = 0; i < nums.size(); i++) {
+    int complement = target - nums[i];
+    if (seen.count(complement)) {
+      return {i, seen[complement]};
+    }
+
+    seen[nums[i]] = i;
+  }
+
+  return {};
+}
+
+int main() {
+  cout << "Enter the number of elements in the array: ";
+  int n;
+  cin >> n;
+
+  if (n < 2 || n > 104) {
+    cout << "Invalid number of elements. Please ensure 2 <= n <= 104." << endl;
+    return 1;
+  }
+
+  vector<int> nums(n);
+
+  cout << "Enter the elements of the array:" << endl;
+  for (int i = 0; i < n; i++) {
+    cin >> nums[i];
+
+    if (nums[i] < -109 || nums[i] > 109) {
+      cout << "Invalid array element. Please ensure -109 <= nums[i] <= 109." << endl;
+      return 1;
+    }
+  }
+
+  cout << "Enter the target value: ";
+  int target;
+  cin >> target;
+
+  if (target < -109 || target > 109) {
+    cout << "Invalid target value. Please ensure -109 <= target <= 109." << endl;
+    return 1;
+  }
+
+  vector<int> result = two_sum(nums, target);
+
+  if (result.empty()) {
+    cout << "No two numbers add up to " << target << endl;
+  } else {
+    cout << "The two numbers are at indices " << result[0] << " and " << result[1] << endl;
+  }
+
+  return 0;
+}
